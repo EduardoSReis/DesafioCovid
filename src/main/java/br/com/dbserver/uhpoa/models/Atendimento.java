@@ -1,4 +1,4 @@
-package models;
+package br.com.dbserver.uhpoa.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

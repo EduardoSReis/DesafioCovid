@@ -1,8 +1,8 @@
-package repositories;
+package br.com.dbserver.uhpoa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import models.Atendimento;
+import br.com.dbserver.uhpoa.models.Atendimento;
 
 public interface AtendimentoRepository extends JpaRepository<Atendimento, String> {
 
