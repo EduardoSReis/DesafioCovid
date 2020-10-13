@@ -4,18 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@Table(name="ATENDIMENTO")
 public class Atendimento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
+	private Long id;
 	
-	Triagem triagem;
+	private Triagem triagem;
 	
-	@NotBlank
+	
 	private String descricaoDoTratamento;
 
 }
