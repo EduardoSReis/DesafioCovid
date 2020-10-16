@@ -42,7 +42,8 @@ public class Triagem implements Serializable {
 	private boolean tosse;
 
 	private boolean perdaDoPaladar;
-
+	
+	
 	public Triagem() {
 		super();
 		
@@ -54,13 +55,17 @@ public class Triagem implements Serializable {
 		int counter = 0;
 		if (triagem.isCorisa()) {
 			counter++;
-		} else if (triagem.isDificuldadeRespiratoria()) {
+		}
+		if (triagem.isDificuldadeRespiratoria()) {
 			counter++;
-		} else if (triagem.isDorDeGarganta()) {
+		}
+		if (triagem.isDorDeGarganta()) {
 			counter++;
-		} else if (triagem.isPerdaDoPaladar()) {
+		}
+		if (triagem.isPerdaDoPaladar()) {
 			counter++;
-		} else if (triagem.isTosse()) {
+		}
+		if (triagem.isTosse()) {
 			counter++;
 		}
 
