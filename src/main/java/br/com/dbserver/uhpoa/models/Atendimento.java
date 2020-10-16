@@ -5,6 +5,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
@@ -21,8 +24,16 @@ public class Atendimento {
 	
 	private String descricaoDoTratamento;
 	
+	private DateTime dataDaSaida;
+	
 	
 
+	public Long duracaoDoAtendimento(Triagem triagem){		
+		 Interval interval = new Interval(triagem.getDataDaEntrada(), this.getDataDaSaida());
+		 return interval.toDurationMillis();
+	}
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -46,6 +57,18 @@ public class Atendimento {
 	public void setDescricaoDoTratamento(String descricaoDoTratamento) {
 		this.descricaoDoTratamento = descricaoDoTratamento;
 	}
+
+
+	public DateTime getDataDaSaida() {
+		return dataDaSaida;
+	}
+
+
+	public void setDataDaSaida(DateTime dataDaSaida) {
+		this.dataDaSaida = dataDaSaida;
+	}
+
+	
 
 	
 	

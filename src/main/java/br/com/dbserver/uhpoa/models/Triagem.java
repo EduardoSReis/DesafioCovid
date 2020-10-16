@@ -1,20 +1,17 @@
 package br.com.dbserver.uhpoa.models;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import br.com.dbserver.uhpoa.repository.AtendimentoRepository;
 
 @Entity
 public class Triagem implements Serializable {
@@ -43,6 +40,7 @@ public class Triagem implements Serializable {
 
 	private boolean perdaDoPaladar;
 	
+	private DateTime dataDaEntrada;
 	
 	public Triagem() {
 		super();
@@ -163,4 +161,18 @@ public class Triagem implements Serializable {
 		this.perdaDoPaladar = perdaDoPaladar;
 	}
 
+
+	public DateTime getDataDaEntrada() {
+		return dataDaEntrada;
+	}
+
+
+	public void setDataDaEntrada(DateTime dataDaEntrada) {
+		this.dataDaEntrada = dataDaEntrada;
+	}
+
+
+	
+	
+	
 }
