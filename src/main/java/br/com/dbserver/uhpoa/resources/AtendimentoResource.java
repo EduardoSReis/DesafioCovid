@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.dbserver.uhpoa.models.Atendimento;
+import br.com.dbserver.uhpoa.models.Triagem;
 import br.com.dbserver.uhpoa.repository.AtendimentoRepository;
+import br.com.dbserver.uhpoa.repository.TriagemRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -27,6 +29,7 @@ public class AtendimentoResource {
 	@Autowired
 	private AtendimentoRepository atendimentoRepository;
 	
+		
 	@GetMapping("/atendimentos")
 	@ApiOperation(value="Retorna lista com todos os atendimentos")
 	public List<Atendimento> listaAtendimento (){
@@ -42,8 +45,9 @@ public class AtendimentoResource {
 	
 	@PostMapping("/registraratendimento")
 	@ApiOperation(value="Registra um atendimento no banco de dados")
-	public Atendimento registraAtendimento(@RequestBody  @Valid Atendimento atendimento){
+	public Atendimento registraAtendimento(@RequestBody  @Valid Atendimento atendimento){					
 		return atendimentoRepository.save(atendimento);
+				
 	}
 	
 	
