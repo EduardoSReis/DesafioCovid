@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.dbserver.uhpoa.models.Atendimento;
-import br.com.dbserver.uhpoa.models.Triagem;
+import br.com.dbserver.uhpoa.models.AtendimentoEspecialPandemia;
 import br.com.dbserver.uhpoa.repository.AtendimentoRepository;
-import br.com.dbserver.uhpoa.repository.TriagemRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -41,12 +40,21 @@ public class AtendimentoResource {
 	public Atendimento atendimentoById (@PathVariable(value="id") long id){
 		return atendimentoRepository.findById(id);
 	}
+		
 	
-	
-	@PostMapping("/registraratendimento")
-	@ApiOperation(value="Registra um atendimento no banco de dados")
-	public Atendimento registraAtendimento(@RequestBody  @Valid Atendimento atendimento){					
-		return atendimentoRepository.save(atendimento);
+	@PostMapping("/atendimento/{id}")
+	@ApiOperation(value="Atualiza um atendimento no banco de dados")
+	public Atendimento atualizaAtendimento(@PathVariable(value="id") long id, @RequestBody  @Valid AtendimentoEspecialPandemia atendimento){
+		Atendimento atendimentodto = atendimentoRepository.findById(id);
+		atendimentodto.setDescricaoDoTratamento(atendimento.getDescricaoDoTratamento());
+		if(atendimentodto instanceof AtendimentoEspecialPandemia){
+			((AtendimentoEspecialPandemia) atendimentodto).setExameDeBiologiaMolecular(((AtendimentoEspecialPandemia) atendimento).isExameDeBiologiaMolecular());
+			((AtendimentoEspecialPandemia) atendimentodto).setExameDeSorologia(((AtendimentoEspecialPandemia) atendimento).isExameDeSorologia());
+			
+		}
+		atendimentodto.setDataDeSaida(atendimento.getDataDeSaida());
+		atendimentodto.setDuracaoDoAtendimento();
+		return atendimentoRepository.save(atendimentodto);
 				
 	}
 	

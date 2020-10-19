@@ -1,12 +1,12 @@
 package br.com.dbserver.uhpoa.models;
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -24,16 +24,35 @@ public class Atendimento {
 	
 	private String descricaoDoTratamento;
 	
-	private DateTime dataDaSaida;
+	private LocalDateTime dataDeSaida;
 	
+	private Long duracaoDoAtendimento = setDuracaoDoAtendimento();
+
+	
+	public Long setDuracaoDoAtendimento(){		
+		
+		if(getDataDeSaida() == null){
+			return null;
+		}
+		
+		Duration duration = Duration.between(getTriagem().getDataDeEntrada(), getDataDeSaida());
+		return duration.toHours();
+	}	
+	
+	
+	public Long getDuracaoDoAtendimento() {
+		return duracaoDoAtendimento;
+	}	
 	
 
-	public Long duracaoDoAtendimento(Triagem triagem){		
-		 Interval interval = new Interval(triagem.getDataDaEntrada(), this.getDataDaSaida());
-		 return interval.toDurationMillis();
+	public void setDataDeSaida(LocalDateTime dataDeSaida) {
+		this.dataDeSaida = dataDeSaida;
 	}
 	
-	
+	public LocalDateTime getDataDeSaida() {
+		return dataDeSaida;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -56,20 +75,5 @@ public class Atendimento {
 
 	public void setDescricaoDoTratamento(String descricaoDoTratamento) {
 		this.descricaoDoTratamento = descricaoDoTratamento;
-	}
-
-
-	public DateTime getDataDaSaida() {
-		return dataDaSaida;
-	}
-
-
-	public void setDataDaSaida(DateTime dataDaSaida) {
-		this.dataDaSaida = dataDaSaida;
-	}
-
-	
-
-	
-	
+	}	
 }

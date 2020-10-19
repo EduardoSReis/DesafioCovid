@@ -8,9 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
-import org.joda.time.DateTime;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -40,12 +37,7 @@ public class Triagem implements Serializable {
 
 	private boolean perdaDoPaladar;
 	
-	private DateTime dataDaEntrada;
-	
-	public Triagem() {
-		super();
-		
-	}
+	private LocalDateTime dataDeEntrada = LocalDateTime.now();
 	
 
 	public Atendimento registraAtendimento(Triagem triagem) {
@@ -161,17 +153,13 @@ public class Triagem implements Serializable {
 		this.perdaDoPaladar = perdaDoPaladar;
 	}
 
-
-	public DateTime getDataDaEntrada() {
-		return dataDaEntrada;
+	public LocalDateTime getDataDeEntrada() {
+		return dataDeEntrada;
 	}
 
-
-	public void setDataDaEntrada(DateTime dataDaEntrada) {
-		this.dataDaEntrada = dataDaEntrada;
+	public void setDataDeEntrada(LocalDateTime dataDeEntrada) {
+		this.dataDeEntrada = dataDeEntrada;
 	}
-
-
 	
 	
 	
