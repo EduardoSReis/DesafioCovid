@@ -26,20 +26,15 @@ public class Atendimento {
 	
 	private LocalDateTime dataDeSaida;
 	
-	private Long duracaoDoAtendimento = setDuracaoDoAtendimento();
+	private Long duracaoDoAtendimento;
+	
+	
+	
+	public void setDuracaoDoAtendimento(Long duracaoDoAtendimento) {
+		this.duracaoDoAtendimento = duracaoDoAtendimento;
+	}
 
-	
-	public Long setDuracaoDoAtendimento(){		
-		
-		if(getDataDeSaida() == null){
-			return null;
-		}
-		
-		Duration duration = Duration.between(getTriagem().getDataDeEntrada(), getDataDeSaida());
-		return duration.toHours();
-	}	
-	
-	
+
 	public Long getDuracaoDoAtendimento() {
 		return duracaoDoAtendimento;
 	}	

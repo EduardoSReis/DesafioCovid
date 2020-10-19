@@ -1,5 +1,6 @@
 package br.com.dbserver.uhpoa.resources;
 
+import java.time.Duration;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -53,7 +54,9 @@ public class AtendimentoResource {
 			
 		}
 		atendimentodto.setDataDeSaida(atendimento.getDataDeSaida());
-		atendimentodto.setDuracaoDoAtendimento();
+				
+		Duration duration = Duration.between(atendimentodto.getTriagem().getDataDeEntrada(), atendimento.getDataDeSaida());
+		atendimentodto.setDuracaoDoAtendimento(duration.toHours());		
 		return atendimentoRepository.save(atendimentodto);
 				
 	}
