@@ -53,8 +53,7 @@ public class AtendimentoResource {
 			((AtendimentoEspecialPandemia) atendimentodto).setExameDeSorologia(((AtendimentoEspecialPandemia) atendimento).isExameDeSorologia());
 			
 		}
-		atendimentodto.setDataDeSaida(atendimento.getDataDeSaida());
-				
+		atendimentodto.setDataDeSaida(atendimento.getDataDeSaida());				
 		Duration duration = Duration.between(atendimentodto.getTriagem().getDataDeEntrada(), atendimento.getDataDeSaida());
 		atendimentodto.setDuracaoDoAtendimento(duration.toHours());		
 		return atendimentoRepository.save(atendimentodto);

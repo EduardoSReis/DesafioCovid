@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -38,6 +39,8 @@ public class Triagem implements Serializable {
 	private boolean perdaDoPaladar;
 	
 	private LocalDateTime dataDeEntrada = LocalDateTime.now();
+	
+	private UnidadeDeAtendimentoMedico unidadeDeAtendimentoMedico;
 	
 
 	public Atendimento registraAtendimento(Triagem triagem) {
@@ -159,6 +162,14 @@ public class Triagem implements Serializable {
 
 	public void setDataDeEntrada(LocalDateTime dataDeEntrada) {
 		this.dataDeEntrada = dataDeEntrada;
+	}
+
+	public UnidadeDeAtendimentoMedico getUnidadeDeAtendimentoMedico() {
+		return unidadeDeAtendimentoMedico;
+	}
+
+	public void setUnidadeDeAtendimentoMedico(UnidadeDeAtendimentoMedico unidadeDeAtendimentoMedico) {
+		this.unidadeDeAtendimentoMedico = unidadeDeAtendimentoMedico;
 	}
 	
 	
