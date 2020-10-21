@@ -1,7 +1,5 @@
 package br.com.dbserver.uhpoa.models;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,9 +24,7 @@ public class Estatisticas {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
-	
+		
 	public UnidadeDeAtendimentoMedico getUnidadeDeAtendimento() {
 		return unidadeDeAtendimento;
 	}

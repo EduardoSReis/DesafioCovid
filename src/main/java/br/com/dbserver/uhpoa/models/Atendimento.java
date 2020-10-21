@@ -1,5 +1,4 @@
 package br.com.dbserver.uhpoa.models;
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
