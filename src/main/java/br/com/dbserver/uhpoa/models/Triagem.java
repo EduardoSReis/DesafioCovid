@@ -8,8 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.AssertFalse;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.istack.NotNull;
 
 @Entity
 public class Triagem implements Serializable {
@@ -21,25 +27,37 @@ public class Triagem implements Serializable {
 	@OneToOne
 	@JsonManagedReference
 	private Atendimento atendimento;
-
+	
+	@NotNull
+	@Valid
+	@NotBlank(message = "Por favor, descreva os sintomas relatadas pelo paciente")
 	private String sintomasRelatadosPeloCliente;
-
+	
+	@DecimalMax("30.0") @DecimalMin("1.0") 
 	private double pressao;
-
+	
+	@DecimalMax("45.0") @DecimalMin("20.0") 
 	private double temperatura;
-
+	
+	@NotNull	
 	private boolean corisa;
-
+	
+	@NotNull	
 	private boolean dorDeGarganta;
-
+	
+	@NotNull	
 	private boolean dificuldadeRespiratoria;
 
+	@NotNull	
 	private boolean tosse;
-
+	
+	@NotNull	
 	private boolean perdaDoPaladar;
 	
+	@NotNull	
 	private LocalDateTime dataDeEntrada = LocalDateTime.now();
 	
+	@NotNull	
 	private UnidadeDeAtendimentoMedico unidadeDeAtendimentoMedico;
 	
 

@@ -47,7 +47,7 @@ public class TriagemResource {
 
 	@PostMapping("/registrartriagem")
 	@ApiOperation(value = "Salva triagem no banco")
-	public Atendimento registraTriagem(@RequestBody @Valid Triagem triagem) {		
+	public Atendimento registraTriagem(@Valid @RequestBody Triagem triagem) {		
 		triagemRepository.save(triagem);		
 		return atendimentoRepository.save(triagem.registraAtendimento(triagem));
 
