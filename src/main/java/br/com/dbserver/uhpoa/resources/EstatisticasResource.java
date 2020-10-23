@@ -31,40 +31,45 @@ public class EstatisticasResource {
 	@ApiOperation(value = "Retorna lista com todas as estatísticas")
 	public List<Estatisticas> listaEstatisticas() {
 		List<Estatisticas> listaEstatisticas = estatisticasRepository.findAll();
-		
-			for (int i = 0; i < UnidadeDeAtendimentoMedico.values().length; i++) {
-				try {
-					
+
+		for (int i = 0; i < UnidadeDeAtendimentoMedico.values().length; i++) {
+			try {
+
 				if (listaEstatisticas.get(i) == null) {
-					
 
 				} else {
 
-					listaEstatisticas.get(i).setTempoMaximoDeAtendimento(atendimentoMaisLongo(i));
-					listaEstatisticas.get(i).setTempoMinimoDeAtendimento(atendimentoMaisRapido(i));
-					listaEstatisticas.get(i).setTempoMedioDeAtendimento(tempoMedioDeAtendimento(i));
-					listaEstatisticas.get(i).setAtendimentosDeCovid(atendimentosDeCovid(i));
-					estatisticasRepository.save(listaEstatisticas.get(i));
+					atualizaUnidadeDeAtendimentoMedico(listaEstatisticas, i);
 
 				}
-				
-				} catch (IndexOutOfBoundsException error) {
-					
-					Estatisticas estatisticas = new Estatisticas();
-					estatisticas.setUnidadeDeAtendimento(UnidadeDeAtendimentoMedico.values()[i]);
-					estatisticas.setTempoMaximoDeAtendimento(atendimentoMaisLongo(i));
-					estatisticas.setTempoMinimoDeAtendimento(atendimentoMaisRapido(i));
-					estatisticas.setTempoMedioDeAtendimento(tempoMedioDeAtendimento(i));
-					estatisticas.setAtendimentosDeCovid(atendimentosDeCovid(i));
-					estatisticasRepository.save(estatisticas);
-				}
-				
+
+			} catch (IndexOutOfBoundsException error) {
+
+				criarNovaUnidadeDeAtendimento(i);
 			}
 
-		
+		}
 
 		return estatisticasRepository.findAll();
 
+	}
+
+	private void atualizaUnidadeDeAtendimentoMedico(List<Estatisticas> listaEstatisticas, int i) {
+		listaEstatisticas.get(i).setTempoMaximoDeAtendimento(atendimentoMaisLongo(i));
+		listaEstatisticas.get(i).setTempoMinimoDeAtendimento(atendimentoMaisRapido(i));
+		listaEstatisticas.get(i).setTempoMedioDeAtendimento(tempoMedioDeAtendimento(i));
+		listaEstatisticas.get(i).setAtendimentosDeCovid(atendimentosDeCovid(i));
+		estatisticasRepository.save(listaEstatisticas.get(i));
+	}
+
+	private void criarNovaUnidadeDeAtendimento(int i) {
+		Estatisticas estatisticas = new Estatisticas();
+		estatisticas.setUnidadeDeAtendimento(UnidadeDeAtendimentoMedico.values()[i]);
+		estatisticas.setTempoMaximoDeAtendimento(atendimentoMaisLongo(i));
+		estatisticas.setTempoMinimoDeAtendimento(atendimentoMaisRapido(i));
+		estatisticas.setTempoMedioDeAtendimento(tempoMedioDeAtendimento(i));
+		estatisticas.setAtendimentosDeCovid(atendimentosDeCovid(i));
+		estatisticasRepository.save(estatisticas);
 	}
 
 	public Long atendimentoMaisLongo(int id) {
@@ -74,11 +79,15 @@ public class EstatisticasResource {
 			return (long) 0;
 		}
 		for (Triagem triagem : triagens) {
-			if (triagem.getAtendimento().getDuracaoDoAtendimento() == null) {
-				return (long) 0;
-			} else if (atendimentoMaisLongo < triagem.getAtendimento().getDuracaoDoAtendimento()) {
-				atendimentoMaisLongo = triagem.getAtendimento().getDuracaoDoAtendimento();
+			try {
+				if (atendimentoMaisLongo < triagem.getAtendimento().getDuracaoDoAtendimento()) {
+					atendimentoMaisLongo = triagem.getAtendimento().getDuracaoDoAtendimento();
+				}
+
+			} catch (NullPointerException error) {
+
 			}
+
 		}
 		return atendimentoMaisLongo;
 
@@ -91,11 +100,19 @@ public class EstatisticasResource {
 			return (long) 0;
 		}
 		for (Triagem triagem : triagens) {
-			if (triagem.getAtendimento().getDuracaoDoAtendimento() == null) {
-				return (long) 0;
-			} else if (atendimentoMaisRapido > triagem.getAtendimento().getDuracaoDoAtendimento()) {
-				atendimentoMaisRapido = triagem.getAtendimento().getDuracaoDoAtendimento();
+
+			try {
+				if (triagem.getAtendimento().getDuracaoDoAtendimento() == 0) {
+					atendimentoMaisRapido = triagem.getAtendimento().getDuracaoDoAtendimento();
+
+				} else if (atendimentoMaisRapido > triagem.getAtendimento().getDuracaoDoAtendimento()) {
+					atendimentoMaisRapido = triagem.getAtendimento().getDuracaoDoAtendimento();
+				}
+
+			} catch (NullPointerException error) {
+
 			}
+
 		}
 
 		return atendimentoMaisRapido;
