@@ -1,22 +1,16 @@
 package br.com.dbserver.uhpoa.resources;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.dbserver.uhpoa.models.Atendimento;
-import br.com.dbserver.uhpoa.models.Triagem;
+import br.com.dbserver.uhpoa.models.Status;
 import br.com.dbserver.uhpoa.models.Usuario;
+import br.com.dbserver.uhpoa.repository.StatusRepository;
 import br.com.dbserver.uhpoa.repository.UsuarioRepository;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Api;
 
 @RestController
 public class UsuarioResource {
@@ -24,27 +18,30 @@ public class UsuarioResource {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping("/usuarios")
-	@ApiOperation(value="Retorna lista com todos os usuarios")
-	public List<Usuario> listaUsuario (){
-		return usuarioRepository.findAll();
-	}
+	@Autowired
+	private StatusRepository statusRepository;
 	
-	@GetMapping("/usuario/{id}")
-	@ApiOperation(value="Retorna usuário coforme ID")
-	public Usuario usuarioById (@PathVariable(value="id") long id){
-		return usuarioRepository.findById(id);
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
-	@PostMapping("/registrarUsuario")
-	@ApiOperation(value="Salva usuário no banco")
-	public Usuario registraUsuario(@RequestBody  @Valid Usuario	usuario){
+	public Usuario registraUsuario(Usuario usuario){
+		Status status = statusRepository.findByNome("ROLE_USER");
+		usuario.setStatus(status);
+		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 		return usuarioRepository.save(usuario);
 	}
 	
-	@DeleteMapping("/usuario")
-	@ApiOperation(value="Deleta usuário do banco")
-	public void deletaUsuario(@RequestBody Usuario usuario){
-		usuarioRepository.delete(usuario);
+	public Usuario findByLogin(String login){
+		return usuarioRepository.findByLogin(login);
+	}
+	
+	public Usuario findByLoginAndPassword(String login, String password){
+		Usuario usuario = findByLogin(login);
+		if(usuario != null){
+			if(passwordEncoder.matches(password, usuario.getPassword()));{
+				return usuario;
+			}
+		}
+		return null;
 	}
 }
