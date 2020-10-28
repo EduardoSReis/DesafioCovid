@@ -15,7 +15,7 @@ import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("/api")
-@Api(value = "API REST Triagem")
+@Api(value = "API REST Controle de Usuários")
 @CrossOrigin(origins = "*")
 public class AuthController {
    
