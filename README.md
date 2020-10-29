@@ -5,7 +5,10 @@
 
 É recomendando que você possua a última versão do MySQL no seu computador.
 
-As tabelas no banco são criadas automaticamente, com exceção da tabela Status.
+As tabelas no banco são criadas automaticamente, com exceção da tabela Status, que devem ser.
+'1', 'ROLE_ADMIN'
+'2', 'ROLE_USER'
+
 
 Foram utilizadas as as bibliotecas Lombok, JSon Web Token (JWT) e spring web security para fazer validação do usuário.
 
